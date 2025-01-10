@@ -19,7 +19,7 @@ local function atbashCipher(text)
     return table.concat(result)
 end
 
-local baseUi = loadstring(game:HttpGet("https://pastebin.com/raw/XuC5DavN"))()
+local baseUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/UILib.lua"))()
 
 local uiElements = 3
 local frame = baseUi.createUi("Atbash Cipher", uiElements)
