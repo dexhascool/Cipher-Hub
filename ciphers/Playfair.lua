@@ -72,7 +72,7 @@ local function playfairCipher(text, key)
     return table.concat(result)
 end
 
-local baseUi = loadstring(game:HttpGet("https://pastebin.com/raw/XuC5DavN"))()
+local baseUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/UILib.lua"))()
 
 local uiElements = 4
 local frame = baseUi.createUi("Playfair Cipher", uiElements)
