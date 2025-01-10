@@ -23,5 +23,4 @@ Once loaded, Cipher Hub will:
 
 1. Display a GUI with buttons for each available cipher.
 2. Each button shows the cipher name and a short description.
-3. Clicking a button will:
-- Load the selected cipher.
+3. Clicking a button will load the selected cipher.
