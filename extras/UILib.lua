@@ -80,7 +80,7 @@ function baseUi.createUi(title, uiElements)
 
     reloadButton.MouseButton1Click:Connect(function()
         screenGui:Destroy()
-        loadstring(game:HttpGet("https://pastebin.com/raw/fBDu23C2"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/loader.lua"))()
     end)
 
     return frame
