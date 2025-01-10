@@ -13,8 +13,7 @@ Cipher Hub is a Lua script designed for Roblox that allows users to encode messa
 
 1. Copy the loader script:
 ```lua
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/loader.lua"))()
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/loader.lua"))()```
 2. Execute the script in your Roblox executor by pasting it into the textbox.
 
 ## Usage
