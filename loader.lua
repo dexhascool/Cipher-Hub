@@ -3,10 +3,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Ciphe
 _G.CipherUtils = _G.CipherUtils or {}
 
 function _G.CipherUtils.generateRandomString()
+    local validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     local length = math.random(10, 20)
     local array = {}
     for i = 1, length do
-        array[i] = string.char(math.random(32, 126))
+        local randomIndex = math.random(1, #validChars)
+        array[i] = validChars:sub(randomIndex, randomIndex)
     end
     return table.concat(array)
 end
