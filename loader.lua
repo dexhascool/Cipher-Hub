@@ -13,10 +13,26 @@ function _G.CipherUtils.generateRandomString()
     return table.concat(array)
 end
 
-local logFolderName = _G.CipherUtils.generateRandomString()
+local parentFolderName = "CipherHub"
+if not isfolder(parentFolderName) then
+    makefolder(parentFolderName)
+end
 
-if not isfolder(logFolderName) then
-    makefolder(logFolderName)
+local subFolderName = _G.CipherUtils.generateRandomString()
+local fullFolderPath = parentFolderName .. "/" .. subFolderName
+if not isfolder(fullFolderPath) then
+    makefolder(fullFolderPath)
+end
+
+local logFileName = fullFolderPath .. "/" .. tostring(os.time()) .. ".txt"
+if not isfile(logFileName) then
+    writefile(logFileName, "") -- Create an empty log file
+end
+
+function _G.CipherUtils.log(message)
+    local formattedMessage = "[CipherUtils]: " .. message
+    print(formattedMessage)
+    appendfile(logFileName, formattedMessage .. "\n")
 end
 
 function _G.CipherUtils.fetchCiphers()
@@ -40,17 +56,6 @@ end
 
 function _G.CipherUtils.getService(serviceName)
     return game:GetService(serviceName)
-end
-
-local logFileName = logFolderName .. "/log.txt"
-
-function _G.CipherUtils.log(message)
-    local formattedMessage = "[CipherUtils]: " .. message
-    print(formattedMessage)
-    if not isfile(logFileName) then
-        writefile(logFileName, "")
-    end
-    appendfile(logFileName, formattedMessage .. "\n")
 end
 
 function _G.CipherUtils.chatMessage(str)
