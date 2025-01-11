@@ -13,7 +13,7 @@ function _G.CipherUtils.generateRandomString()
     return table.concat(array)
 end
 
-local parentFolderName = "CipherHub"
+local parentFolderName = "ciphub"
 if not isfolder(parentFolderName) then
     makefolder(parentFolderName)
 end
