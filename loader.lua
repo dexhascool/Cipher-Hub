@@ -2,6 +2,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Ciphe
 
 _G.CipherUtils = _G.CipherUtils or {}
 
+local logFileName = string.format("%d-%s-log.txt", game.PlaceId, os.date("%d_%m_%y"))
+
+if not isfile(logFileName) then
+    writefile(logFileName, string.format("Cipher Hub Logs from %s\n\n", os.date("%d/%m/%y")))
+end
+
 function _G.CipherUtils.fetchCiphers()
     return _G.ciphers
 end
@@ -26,7 +32,9 @@ function _G.CipherUtils.getService(serviceName)
 end
 
 function _G.CipherUtils.log(message)
-    print("[CipherUtils]: " .. message)
+    local formattedMessage = "[CipherUtils]: " .. message
+    print(formattedMessage)
+    appendfile(logFileName, formattedMessage .. "\n")
 end
 
 function _G.CipherUtils.chatMessage(str)
