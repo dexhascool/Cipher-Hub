@@ -2,10 +2,19 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Ciphe
 
 _G.CipherUtils = _G.CipherUtils or {}
 
-local logFileName = string.format("%d-%s-log.txt", game.PlaceId, os.date("%d_%m_%y"))
+function _G.CipherUtils.generateRandomString()
+    local length = math.random(10, 20)
+    local array = {}
+    for i = 1, length do
+        array[i] = string.char(math.random(32, 126))
+    end
+    return table.concat(array)
+end
 
-if not isfile(logFileName) then
-    writefile(logFileName, string.format("Cipher Hub Logs from %s\n\n", os.date("%d/%m/%y")))
+local logFolderName = _G.CipherUtils.generateRandomString()
+
+if not isfolder(logFolderName) then
+    makefolder(logFolderName)
 end
 
 function _G.CipherUtils.fetchCiphers()
@@ -31,9 +40,14 @@ function _G.CipherUtils.getService(serviceName)
     return game:GetService(serviceName)
 end
 
+local logFileName = logFolderName .. "/log.txt"
+
 function _G.CipherUtils.log(message)
     local formattedMessage = "[CipherUtils]: " .. message
     print(formattedMessage)
+    if not isfile(logFileName) then
+        writefile(logFileName, "")
+    end
     appendfile(logFileName, formattedMessage .. "\n")
 end
 
