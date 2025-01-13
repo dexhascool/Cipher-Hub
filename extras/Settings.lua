@@ -12,10 +12,10 @@ function Settings:CreateSettingsUI()
         Position = UDim2.new(0.5, -150, 0.5, -200),
         BackgroundColor3 = Color3.fromRGB(30, 30, 30),
         Visible = false,
-        Parent = nil
+        Parent = nil,
     })
 
-    _G.CipherUtils.createInstance("TextButton", {
+    local closeButton = _G.CipherUtils.createInstance("TextButton", {
         Name = "CloseButton",
         Text = "Close",
         Size = UDim2.new(0, 80, 0, 30),
@@ -25,10 +25,11 @@ function Settings:CreateSettingsUI()
         Font = Enum.Font.GothamBold,
         TextSize = 16,
         Parent = settingsFrame,
-        MouseButton1Click = function()
-            settingsFrame.Visible = false
-        end
     })
+
+    closeButton.MouseButton1Click:Connect(function()
+        settingsFrame.Visible = false
+    end)
 
     _G.CipherUtils.createInstance("TextLabel", {
         Name = "TitleLabel",
@@ -39,10 +40,10 @@ function Settings:CreateSettingsUI()
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Font = Enum.Font.GothamBold,
         TextSize = 20,
-        Parent = settingsFrame
+        Parent = settingsFrame,
     })
 
-    local toggleLabel = _G.CipherUtils.createInstance("TextLabel", {
+    _G.CipherUtils.createInstance("TextLabel", {
         Name = "ToggleLabel",
         Text = "Example Toggle",
         Size = UDim2.new(0, 200, 0, 30),
@@ -51,7 +52,7 @@ function Settings:CreateSettingsUI()
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Font = Enum.Font.Gotham,
         TextSize = 16,
-        Parent = settingsFrame
+        Parent = settingsFrame,
     })
 
     local toggleButton = _G.CipherUtils.createInstance("TextButton", {
@@ -63,11 +64,11 @@ function Settings:CreateSettingsUI()
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Font = Enum.Font.Gotham,
         TextSize = 16,
-        Parent = settingsFrame
+        Parent = settingsFrame,
     })
 
     local toggleState = false
-    toggleButton.MouseButton1Click = function()
+    toggleButton.MouseButton1Click:Connect(function()
         toggleState = not toggleState
         toggleButton.Text = toggleState and "ON" or "OFF"
         toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(50, 50, 50)
@@ -78,9 +79,8 @@ function Settings:CreateSettingsUI()
         if Settings.OnToggle then
             Settings.OnToggle("ExampleToggle", toggleState)
         end
-    end
+    end)
 
-    -- Load previous toggle state
     local settingsPath = "ciphub/settings/ExampleToggle.txt"
     if isfile(settingsPath) then
         local savedState = readfile(settingsPath)
