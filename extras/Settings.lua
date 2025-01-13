@@ -21,6 +21,9 @@ function Settings:CreateSettingsUI()
         Size = UDim2.new(0, 80, 0, 30),
         Position = UDim2.new(1, -90, 0, 10),
         BackgroundColor3 = Color3.fromRGB(150, 0, 0),
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Font = Enum.Font.GothamBold,
+        TextSize = 16,
         Parent = settingsFrame,
         MouseButton1Click = function()
             settingsFrame.Visible = false
@@ -69,9 +72,21 @@ function Settings:CreateSettingsUI()
         toggleButton.Text = toggleState and "ON" or "OFF"
         toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(50, 50, 50)
 
+        local settingsPath = "ciphub/settings/ExampleToggle.txt"
+        writefile(settingsPath, tostring(toggleState))
+
         if Settings.OnToggle then
             Settings.OnToggle("ExampleToggle", toggleState)
         end
+    end
+
+    -- Load previous toggle state
+    local settingsPath = "ciphub/settings/ExampleToggle.txt"
+    if isfile(settingsPath) then
+        local savedState = readfile(settingsPath)
+        toggleState = savedState == "true"
+        toggleButton.Text = toggleState and "ON" or "OFF"
+        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(50, 50, 50)
     end
 
     return settingsFrame
