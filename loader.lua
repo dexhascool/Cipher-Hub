@@ -2,31 +2,25 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Ciphe
 
 _G.CipherUtils = _G.CipherUtils or {}
 
-function _G.CipherUtils.generateRandomString()
-    local validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    local length = math.random(10, 20)
-    local array = {}
-    for i = 1, length do
-        local randomIndex = math.random(1, #validChars)
-        array[i] = validChars:sub(randomIndex, randomIndex)
-    end
-    return table.concat(array)
-end
-
 local parentFolderName = "ciphub"
 if not isfolder(parentFolderName) then
     makefolder(parentFolderName)
 end
 
-local subFolderName = _G.CipherUtils.generateRandomString()
-local fullFolderPath = parentFolderName .. "/" .. subFolderName
-if not isfolder(fullFolderPath) then
-    makefolder(fullFolderPath)
+local logsFolderPath = parentFolderName .. "/logs"
+if not isfolder(logsFolderPath) then
+    makefolder(logsFolderPath)
 end
 
-local logFileName = fullFolderPath .. "/" .. tostring(os.time()) .. ".txt"
+local settingsFolderPath = parentFolderName .. "/settings"
+if not isfolder(settingsFolderPath) then
+    makefolder(settingsFolderPath)
+end
+
+local timestamp = os.date("%Y%m%d_%H%M%S")
+local logFileName = logsFolderPath .. "/CipherHub_" .. timestamp .. ".txt"
 if not isfile(logFileName) then
-    writefile(logFileName, "") -- Create an empty log file
+    writefile(logFileName, "")
 end
 
 function _G.CipherUtils.log(message)
@@ -52,10 +46,6 @@ function _G.CipherUtils.createInstance(className, properties, parent)
         instance.Parent = parent
     end
     return instance
-end
-
-function _G.CipherUtils.getService(serviceName)
-    return game:GetService(serviceName)
 end
 
 function _G.CipherUtils.chatMessage(str)
@@ -98,7 +88,7 @@ function _G.CipherUtils.chatMessage(str)
     end
 end
 
-local screenGui = _G.CipherUtils.createInstance("ScreenGui", { Name = "CipherHubGui" }, _G.CipherUtils.getService("CoreGui"))
+local screenGui = _G.CipherUtils.createInstance("ScreenGui", { Name = "CipherHubGui" }, game:GetService("CoreGui"))
 
 local titleLabel = _G.CipherUtils.createInstance("TextLabel", {
     Size = UDim2.new(0, 400, 0, 50),
