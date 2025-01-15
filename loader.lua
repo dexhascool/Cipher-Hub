@@ -48,6 +48,46 @@ function _G.CipherUtils.createInstance(className, properties, parent)
     return instance
 end
 
+function _G.CipherUtils.chatMessage(str)
+    str = tostring(str)
+    local TextChatService = game:GetService("TextChatService")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local isLegacyChat = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") ~= nil
+
+    if not isLegacyChat then
+        local channelsFolder = TextChatService:FindFirstChild("TextChannels")
+        if channelsFolder then
+            local targetChannel = channelsFolder:FindFirstChild("RBXGeneral") or 
+                                  channelsFolder:FindFirstChildWhichIsA("TextChannel")
+            if targetChannel then
+                local success, err = pcall(function()
+                    targetChannel:SendAsync(str)
+                end)
+                if not success then
+                    warn("Failed to send message: " .. tostring(err))
+                end
+            else
+                warn("Error: No valid text channels found.")
+            end
+        else
+            warn("Error: No text channels available. The game may have chat disabled.")
+        end
+    else
+        local sayMessageEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") and 
+                                ReplicatedStorage.DefaultChatSystemChatEvents:FindFirstChild("SayMessageRequest")
+        if sayMessageEvent then
+            local success, err = pcall(function()
+                sayMessageEvent:FireServer(str, "All")
+            end)
+            if not success then
+                warn("Failed to send message via legacy chat system: " .. tostring(err))
+            end
+        else
+            warn("Error: Legacy chat system not found. Ensure chat is enabled in this game.")
+        end
+    end
+end
+
 local screenGui = _G.CipherUtils.createInstance("ScreenGui", { Name = "CipherHubGui" }, game:GetService("CoreGui"))
 
 local titleLabel = _G.CipherUtils.createInstance("TextLabel", {
