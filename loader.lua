@@ -17,6 +17,12 @@ if not isfolder(settingsFolderPath) then
     makefolder(settingsFolderPath)
 end
 
+local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
+
+local versionFilePath = parentFolderName .. "/version.txt"
+local versionContent = versionData.version
+writefile(versionFilePath, versionContent)
+
 local timestamp = os.date("%Y%m%d_%H%M%S")
 local logFileName = logsFolderPath .. "/CipherHub_" .. timestamp .. ".txt"
 if not isfile(logFileName) then
@@ -155,10 +161,7 @@ end
 
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, yOffset)
 
-local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
-
 local versionFrame
-
 _G.CipherUtils.createInstance("TextButton", {
     Size = UDim2.new(0, 120, 0, 30),
     Position = UDim2.new(0, 10, 0.5, -15),
