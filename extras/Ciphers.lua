@@ -1,4 +1,4 @@
-_G.ciphers = {
+return {
     Atbash = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Atbash.lua", 
         description = "Reverses the alphabet" 
