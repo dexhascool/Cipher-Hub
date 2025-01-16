@@ -17,12 +17,6 @@ if not isfolder(settingsFolderPath) then
     makefolder(settingsFolderPath)
 end
 
-local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
-
-local versionFilePath = parentFolderName .. "/version.txt"
-local versionContent = versionData.version
-writefile(versionFilePath, versionContent)
-
 local timestamp = os.date("%Y%m%d_%H%M%S")
 local logFileName = logsFolderPath .. "/CipherHub_" .. timestamp .. ".txt"
 if not isfile(logFileName) then
@@ -92,10 +86,12 @@ end
 
 local screenGui = _G.CipherUtils.createInstance("ScreenGui", { Name = "CipherHubGui" }, game:GetService("CoreGui"))
 
+local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
+
 local titleLabel = _G.CipherUtils.createInstance("TextLabel", {
     Size = UDim2.new(0, 400, 0, 50),
     Position = UDim2.new(0.5, -200, 0, 10),
-    Text = "Cipher Hub",
+    Text = "Cipher Hub" .. versionData.version,
     Font = Enum.Font.SourceSansBold,
     TextSize = 32,
     BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
@@ -158,6 +154,81 @@ end
 scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, yOffset)
 
 local versionFrame
+local parentFolderName = "ciphub"
+
+if not isfolder(parentFolderName) then
+    makefolder(parentFolderName)
+end
+
+local versionFilePath = parentFolderName .. "/version.txt"
+local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
+local githubVersion = versionData.version
+
+local function showVersionInfo()
+    if versionFrame then
+        versionFrame:Destroy()
+        versionFrame = nil
+    else
+        versionFrame = _G.CipherUtils.createInstance("Frame", {
+            Size = UDim2.new(0, 300, 0, 200),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+        }, screenGui)
+
+        _G.CipherUtils.createInstance("TextLabel", {
+            Size = UDim2.new(1, -20, 0, 30),
+            Position = UDim2.new(0, 10, 0, 10),
+            Text = "Version: " .. githubVersion,
+            Font = Enum.Font.SourceSansBold,
+            TextSize = 20,
+            BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Center,
+        }, versionFrame)
+
+        _G.CipherUtils.createInstance("TextLabel", {
+            Size = UDim2.new(1, -20, 0, 50),
+            Position = UDim2.new(0, 10, 0, 50),
+            Text = "Description: " .. versionData.description,
+            Font = Enum.Font.SourceSans,
+            TextSize = 16,
+            BackgroundTransparency = 1,
+            TextWrapped = true,
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Center,
+        }, versionFrame)
+
+        _G.CipherUtils.createInstance("TextLabel", {
+            Size = UDim2.new(1, -20, 0, 80),
+            Position = UDim2.new(0, 10, 0, 110),
+            Text = "Changelog:\n" .. table.concat(versionData.changelog, "\n"),
+            Font = Enum.Font.SourceSans,
+            TextSize = 16,
+            BackgroundTransparency = 1,
+            TextWrapped = true,
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Top,
+        }, versionFrame)
+    end
+end
+
+if isfile(versionFilePath) then
+    local savedVersion = readfile(versionFilePath)
+    if savedVersion == githubVersion then
+        _G.CipherUtils.log("Version is up to date: " .. savedVersion)
+    else
+        _G.CipherUtils.log("Version mismatch! Updating version file and showing changelog.")
+        writefile(versionFilePath, githubVersion)
+        showVersionInfo()
+    end
+else
+    _G.CipherUtils.log("Version file not found. Creating a new one and showing changelog.")
+    writefile(versionFilePath, githubVersion)
+    showVersionInfo()
+end
+
 _G.CipherUtils.createInstance("TextButton", {
     Size = UDim2.new(0, 120, 0, 30),
     Position = UDim2.new(0, 10, 0.5, -15),
@@ -166,57 +237,5 @@ _G.CipherUtils.createInstance("TextButton", {
     TextSize = 18,
     BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
     TextColor3 = Color3.new(1, 1, 1),
-    MouseButton1Click = function()
-        if versionFrame then
-            versionFrame:Destroy()
-            versionFrame = nil
-        else
-            versionFrame = _G.CipherUtils.createInstance("Frame", {
-                Size = UDim2.new(0, 300, 0, 200),
-                Position = UDim2.new(0.5, 0, 0.5, 0),
-                BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
-                AnchorPoint = Vector2.new(0.5, 0.5),
-                Visible = false,
-            }, screenGui)
-
-            local versionLabel = _G.CipherUtils.createInstance("TextLabel", {
-                Size = UDim2.new(1, -20, 0, 30),
-                Position = UDim2.new(0, 10, 0, 10),
-                Text = "Version: " .. versionData.version,
-                Font = Enum.Font.SourceSansBold,
-                TextSize = 20,
-                BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
-                TextColor3 = Color3.new(1, 1, 1),
-                TextXAlignment = Enum.TextXAlignment.Center,
-                TextYAlignment = Enum.TextYAlignment.Center,
-            }, versionFrame)
-
-            local descriptionLabel = _G.CipherUtils.createInstance("TextLabel", {
-                Size = UDim2.new(1, -20, 0, 50),
-                Position = UDim2.new(0, 10, 0, 50),
-                Text = "Description: " .. versionData.description,
-                Font = Enum.Font.SourceSans,
-                TextSize = 16,
-                BackgroundTransparency = 1,
-                TextWrapped = true,
-                TextColor3 = Color3.new(1, 1, 1),
-                TextXAlignment = Enum.TextXAlignment.Center,
-            }, versionFrame)
-
-            local changelogLabel = _G.CipherUtils.createInstance("TextLabel", {
-                Size = UDim2.new(1, -20, 0, 80),
-                Position = UDim2.new(0, 10, 0, 110),
-                Text = "Changelog:\n" .. table.concat(versionData.changelog, "\n"),
-                Font = Enum.Font.SourceSans,
-                TextSize = 16,
-                BackgroundTransparency = 1,
-                TextWrapped = true,
-                TextColor3 = Color3.new(1, 1, 1),
-                TextXAlignment = Enum.TextXAlignment.Left,
-                TextYAlignment = Enum.TextYAlignment.Top,
-            }, versionFrame)
-
-            versionFrame.Visible = not versionFrame.Visible
-        end
-    end
+    MouseButton1Click = showVersionInfo
 }, buttonSlotFrame)
