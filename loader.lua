@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/Ciphers.lua"))()
+local ciphers = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/Ciphers.lua"))()
 
 _G.CipherUtils = _G.CipherUtils or {}
 
@@ -33,10 +33,6 @@ function _G.CipherUtils.log(message)
     local formattedMessage = "[CipherUtils]: " .. message
     print(formattedMessage)
     appendfile(logFileName, formattedMessage .. "\n")
-end
-
-function _G.CipherUtils.fetchCiphers()
-    return _G.ciphers
 end
 
 function _G.CipherUtils.createInstance(className, properties, parent)
@@ -123,7 +119,7 @@ local scrollingFrame = _G.CipherUtils.createInstance("ScrollingFrame", {
 }, screenGui)
 
 local yOffset = 0
-for cipherName, data in pairs(_G.CipherUtils.fetchCiphers()) do
+for cipherName, data in pairs(ciphers) do
     _G.CipherUtils.createInstance("TextButton", {
         Size = UDim2.new(0, 380, 0, 50),
         Position = UDim2.new(0, 10, 0, yOffset),
