@@ -1,5 +1,5 @@
 return {
-    version = "1.0.0",
+    version = "1.0.1",
     releaseDate = "2025-01-13",
     description = "Added version checking and changelogs.",
     changelog = {
