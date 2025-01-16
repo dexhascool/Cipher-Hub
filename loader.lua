@@ -1,6 +1,6 @@
-local ciphers = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/Ciphers.lua"))()
-
 _G.CipherUtils = _G.CipherUtils or {}
+
+local ciphers = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/Ciphers.lua"))()
 
 local parentFolderName = "ciphub"
 if not isfolder(parentFolderName) then
@@ -87,7 +87,6 @@ end
 local screenGui = _G.CipherUtils.createInstance("ScreenGui", { Name = "CipherHubGui" }, game:GetService("CoreGui"))
 
 local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
-
 local titleLabel = _G.CipherUtils.createInstance("TextLabel", {
     Size = UDim2.new(0, 400, 0, 50),
     Position = UDim2.new(0.5, -200, 0, 10),
@@ -161,7 +160,6 @@ if not isfolder(parentFolderName) then
 end
 
 local versionFilePath = parentFolderName .. "/version.txt"
-local versionData = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/extras/Version.lua"))()
 local githubVersion = versionData.version
 
 local function showVersionInfo()
