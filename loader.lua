@@ -218,35 +218,8 @@ local function showSettings()
         settingsFrame:Destroy()
         settingsFrame = nil
     else
-        settingsFrame = _G.CipherUtils.createInstance("Frame", {
-            Size = UDim2.new(0, 300, 0, 200),
-            Position = UDim2.new(0.5, 0, 0.5, 0),
-            BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
-            AnchorPoint = Vector2.new(0.5, 0.5),
-        }, screenGui)
-
-        _G.CipherUtils.createInstance("TextLabel", {
-            Size = UDim2.new(1, -20, 0, 30),
-            Position = UDim2.new(0, 10, 0, 10),
-            Text = "Settings",
-            Font = Enum.Font.SourceSansBold,
-            TextSize = 20,
-            BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
-            TextColor3 = Color3.new(1, 1, 1),
-            TextXAlignment = Enum.TextXAlignment.Center,
-        }, settingsFrame)
-
-        _G.CipherUtils.createInstance("TextLabel", {
-            Size = UDim2.new(1, -20, 0, 140),
-            Position = UDim2.new(0, 10, 0, 50),
-            Text = "No settings available yet.",
-            Font = Enum.Font.SourceSans,
-            TextSize = 16,
-            BackgroundTransparency = 1,
-            TextWrapped = true,
-            TextColor3 = Color3.new(1, 1, 1),
-            TextXAlignment = Enum.TextXAlignment.Center,
-        }, settingsFrame)
+        local Settings = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/Settings.lua"))()
+        settingsFrame = Settings:CreateSettingsUI()
     end
 end
 
