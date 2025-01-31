@@ -6,72 +6,53 @@ function Settings:CreateSettingsUI()
         return
     end
 
-    local settingsFrame = _G.CipherUtils.createInstance("Frame", {
+    settingsFrame = _G.CipherUtils.createInstance("Frame", {
         Name = "SettingsFrame",
-        Size = UDim2.new(0, 300, 0, 400),
-        Position = UDim2.new(0.5, -150, 0.5, -200),
-        BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-        Visible = false,
-        Parent = nil,
-    })
-
-    local closeButton = _G.CipherUtils.createInstance("TextButton", {
-        Name = "CloseButton",
-        Text = "Close",
-        Size = UDim2.new(0, 80, 0, 30),
-        Position = UDim2.new(1, -90, 0, 10),
-        BackgroundColor3 = Color3.fromRGB(150, 0, 0),
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        Font = Enum.Font.GothamBold,
-        TextSize = 16,
-        Parent = settingsFrame,
-    })
-
-    closeButton.MouseButton1Click:Connect(function()
-        settingsFrame.Visible = false
-    end)
+        Size = UDim2.new(0, 300, 0, 200),
+        Position = UDim2.new(0.5, 0, 0.5, 0),
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
+    }, nil)
 
     _G.CipherUtils.createInstance("TextLabel", {
         Name = "TitleLabel",
+        Size = UDim2.new(1, -20, 0, 30),
+        Position = UDim2.new(0, 10, 0, 10),
         Text = "Settings",
-        Size = UDim2.new(1, 0, 0, 50),
-        Position = UDim2.new(0, 0, 0, 0),
-        BackgroundTransparency = 1,
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        Font = Enum.Font.GothamBold,
+        Font = Enum.Font.SourceSansBold,
         TextSize = 20,
-        Parent = settingsFrame,
-    })
+        BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
+        TextColor3 = Color3.new(1, 1, 1),
+        TextXAlignment = Enum.TextXAlignment.Center,
+    }, settingsFrame)
 
     _G.CipherUtils.createInstance("TextLabel", {
         Name = "ToggleLabel",
         Text = "Example Toggle",
-        Size = UDim2.new(0, 200, 0, 30),
-        Position = UDim2.new(0, 10, 0, 60),
+        Size = UDim2.new(1, -20, 0, 30),
+        Position = UDim2.new(0, 10, 0, 50),
         BackgroundTransparency = 1,
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        Font = Enum.Font.Gotham,
+        TextColor3 = Color3.new(1, 1, 1),
+        Font = Enum.Font.SourceSans,
         TextSize = 16,
-        Parent = settingsFrame,
-    })
+    }, settingsFrame)
 
     local toggleButton = _G.CipherUtils.createInstance("TextButton", {
         Name = "ToggleButton",
         Text = "OFF",
         Size = UDim2.new(0, 80, 0, 30),
-        Position = UDim2.new(0, 220, 0, 60),
-        BackgroundColor3 = Color3.fromRGB(50, 50, 50),
-        TextColor3 = Color3.fromRGB(255, 255, 255),
-        Font = Enum.Font.Gotham,
+        Position = UDim2.new(0, 10, 0, 90),
+        BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
+        TextColor3 = Color3.new(1, 1, 1),
+        Font = Enum.Font.SourceSans,
         TextSize = 16,
-        Parent = settingsFrame,
-    })
+    }, settingsFrame)
 
     local toggleState = false
     toggleButton.MouseButton1Click:Connect(function()
         toggleState = not toggleState
         toggleButton.Text = toggleState and "ON" or "OFF"
-        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(50, 50, 50)
+        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.new(0.2, 0.2, 0.2)
 
         local settingsPath = "ciphub/settings/ExampleToggle.txt"
         writefile(settingsPath, tostring(toggleState))
@@ -86,7 +67,7 @@ function Settings:CreateSettingsUI()
         local savedState = readfile(settingsPath)
         toggleState = savedState == "true"
         toggleButton.Text = toggleState and "ON" or "OFF"
-        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(50, 50, 50)
+        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.new(0.2, 0.2, 0.2)
     end
 
     return settingsFrame
