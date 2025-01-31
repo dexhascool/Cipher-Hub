@@ -212,6 +212,55 @@ local function showVersionInfo()
     end
 end
 
+local settingsFrame
+local function showSettings()
+    if settingsFrame then
+        settingsFrame:Destroy()
+        settingsFrame = nil
+    else
+        settingsFrame = _G.CipherUtils.createInstance("Frame", {
+            Size = UDim2.new(0, 300, 0, 200),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+        }, screenGui)
+
+        _G.CipherUtils.createInstance("TextLabel", {
+            Size = UDim2.new(1, -20, 0, 30),
+            Position = UDim2.new(0, 10, 0, 10),
+            Text = "Settings",
+            Font = Enum.Font.SourceSansBold,
+            TextSize = 20,
+            BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Center,
+        }, settingsFrame)
+
+        _G.CipherUtils.createInstance("TextLabel", {
+            Size = UDim2.new(1, -20, 0, 140),
+            Position = UDim2.new(0, 10, 0, 50),
+            Text = "No settings available yet.",
+            Font = Enum.Font.SourceSans,
+            TextSize = 16,
+            BackgroundTransparency = 1,
+            TextWrapped = true,
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Center,
+        }, settingsFrame)
+    end
+end
+
+_G.CipherUtils.createInstance("TextButton", {
+    Size = UDim2.new(0, 120, 0, 30),
+    Position = UDim2.new(0, 140, 0.5, -15),
+    Text = "Settings",
+    Font = Enum.Font.SourceSans,
+    TextSize = 18,
+    BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
+    TextColor3 = Color3.new(1, 1, 1),
+    MouseButton1Click = showSettings
+}, buttonSlotFrame)
+
 if isfile(versionFilePath) then
     local savedVersion = readfile(versionFilePath)
     if savedVersion == githubVersion then
