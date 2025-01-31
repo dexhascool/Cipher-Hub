@@ -1,15 +1,10 @@
-local baseUi = {}
-
-local function createInstance(className, properties, parent)
-    local instance = Instance.new(className)
-    for property, value in pairs(properties) do
-        instance[property] = value
-    end
-    if parent then
-        instance.Parent = parent
-    end
-    return instance
+if not _G.CipherUtils then
+    warn("CipherUtils not found! Load the loader script first.")
+    return
 end
+
+local createInstance = _G.CipherUtils.createInstance
+local baseUi = {}
 
 function baseUi.createUi(title, uiElements)
     local screenGui = createInstance("ScreenGui", { Name = title .. "Gui" }, game:GetService("CoreGui"))
