@@ -43,17 +43,21 @@ function Settings:CreateSettingsUI()
         Text = "OFF",
         Size = UDim2.new(0, 80, 0, 30),
         Position = UDim2.new(0, 10, 0, 90),
-        BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
+        BackgroundColor3 = Color3.fromRGB(51, 51, 51), -- OFF state: dark gray
         TextColor3 = Color3.new(1, 1, 1),
-        Font = Enum.Font.SourceSans,
-        TextSize = 16,
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 18,
     }, settingsFrame)
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = toggleButton
 
     local toggleState = false
     toggleButton.MouseButton1Click:Connect(function()
         toggleState = not toggleState
         toggleButton.Text = toggleState and "ON" or "OFF"
-        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.new(0.2, 0.2, 0.2)
+        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(51, 51, 51)
 
         local settingsPath = "ciphub/settings/ExampleToggle.txt"
         writefile(settingsPath, tostring(toggleState))
@@ -68,7 +72,7 @@ function Settings:CreateSettingsUI()
         local savedState = readfile(settingsPath)
         toggleState = savedState == "true"
         toggleButton.Text = toggleState and "ON" or "OFF"
-        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.new(0.2, 0.2, 0.2)
+        toggleButton.BackgroundColor3 = toggleState and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(51, 51, 51)
     end
 
     return settingsFrame
