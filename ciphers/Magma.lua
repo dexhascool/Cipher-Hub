@@ -117,26 +117,6 @@ local function magmaEncryptBlock(block, subkeys)
     return L, R
 end
 
-local function magmaDecryptBlock(block, subkeys)
-    local L, R = 0, 0
-    for i = 1, 4 do
-        L = bit32.lshift(L, 8) + string.byte(block, i)
-    end
-    for i = 5, 8 do
-        R = bit32.lshift(R, 8) + string.byte(block, i)
-    end
-
-    for i = 32, 1, -1 do
-        local temp = (L + subkeys[i]) % 0x100000000
-        temp = magmaSubstitution(temp)
-        temp = rotateLeft(temp, 11)
-        local newL = bit32.bxor(R, temp)
-        R = L
-        L = newL
-    end
-    return L, R
-end
-
 function Magma:EncryptString(plaintext)
     plaintext = pad(plaintext)
     local ciphertext = {}
@@ -146,17 +126,6 @@ function Magma:EncryptString(plaintext)
         table.insert(ciphertext, toBytes32(L) .. toBytes32(R))
     end
     return table.concat(ciphertext)
-end
-
-function Magma:DecryptString(ciphertext)
-    local plaintext = {}
-    for i = 1, #ciphertext, 8 do
-        local block = string.sub(ciphertext, i, i + 7)
-        local L, R = magmaDecryptBlock(block, self.subkeys)
-        table.insert(plaintext, toBytes32(L) .. toBytes32(R))
-    end
-    plaintext = table.concat(plaintext)
-    return unpad(plaintext)
 end
 
 local baseUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/UILib.lua"))()
