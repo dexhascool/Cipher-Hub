@@ -110,7 +110,7 @@ local function magmaEncryptBlock(block, subkeys)
         local temp = (L + subkeys[i]) % 0x100000000  -- mod 2^32
         temp = magmaSubstitution(temp)
         temp = rotateLeft(temp, 11)
-        local newL = R ~ temp  -- XOR
+        local newL = bit32.bxor(R, temp)
         R = L
         L = newL
     end
@@ -130,7 +130,7 @@ local function magmaDecryptBlock(block, subkeys)
         local temp = (L + subkeys[i]) % 0x100000000
         temp = magmaSubstitution(temp)
         temp = rotateLeft(temp, 11)
-        local newL = R ~ temp
+        local newL = bit32.bxor(R, temp)
         R = L
         L = newL
     end
