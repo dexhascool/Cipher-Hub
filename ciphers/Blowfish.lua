@@ -284,8 +284,8 @@ local baseUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelon
 local uiElements = 4
 local uiFrame = baseUi.createUi("Blowfish Cipher", uiElements)
 
-local inputBox = baseUi.addInputBox(uiFrame, "Enter text", UDim2.new(0, 10, 0, 100))
-local keyBox = baseUi.addInputBox(uiFrame, "Enter key", UDim2.new(0, 10, 0, 50))
+local inputBox = baseUi.addInputBox(uiFrame, "Enter text", UDim2.new(0, 10, 0, 50))
+local keyBox = baseUi.addInputBox(uiFrame, "Enter key", UDim2.new(0, 10, 0, 100))
 local encodeButton = baseUi.addEncodeButton(uiFrame, UDim2.new(0, 20, 0, 150))
 local resultLabel = baseUi.addResultLabel(uiFrame, UDim2.new(0, 10, 0, 200))
 
