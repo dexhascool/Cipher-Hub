@@ -167,6 +167,22 @@ local function showVersionInfo()
         versionFrame:Destroy()
         versionFrame = nil
     else
+        local function processChangelog(changelog)
+            local processed = {}
+            for _, line in ipairs(changelog) do
+                if string.find(line, "Added") or string.find(line, "Implemented") then
+                    table.insert(processed, '<font color="#00FF00">[+]</font> ' .. line)
+                elseif string.find(line, "Removed") then
+                    table.insert(processed, '<font color="#FF0000">[-]</font> ' .. line)
+                else
+                    table.insert(processed, line)
+                end
+            end
+            return table.concat(processed, "\n")
+        end
+
+        local newChangelog = processChangelog(versionData.changelog)
+
         versionFrame = _G.CipherUtils.createInstance("Frame", {
             Size = UDim2.new(0, 300, 0, 200),
             Position = UDim2.new(0.5, 0, 0.5, 0),
@@ -201,7 +217,7 @@ local function showVersionInfo()
         _G.CipherUtils.createInstance("TextLabel", {
             Size = UDim2.new(1, -20, 0, 80),
             Position = UDim2.new(0, 10, 0, 110),
-            Text = "<b>Changelog:</b>\n" .. table.concat(versionData.changelog, "\n"),
+            Text = "<b>Changelog:</b>\n" .. newChangelog,
             RichText = true,
             Font = Enum.Font.SourceSans,
             TextSize = 16,
