@@ -290,6 +290,7 @@ local encodeButton = baseUi.addEncodeButton(uiFrame, UDim2.new(0, 20, 0, 150))
 local resultLabel = baseUi.addResultLabel(uiFrame, UDim2.new(0, 10, 0, 200))
 
 local lastInputText = ""
+local lastKey = ""
 
 encodeButton.MouseButton1Click:Connect(function()
     local key = keyBox.Text
@@ -305,13 +306,14 @@ encodeButton.MouseButton1Click:Connect(function()
         resultLabel.Text = "Input is blank"
         return
     end
-    if inputText == lastInputText then
-        log("Input is identical to last processed text. No encryption performed.")
-        resultLabel.Text = "Input is the same as last time"
+    if inputText == lastInputText and key == lastKey then
+        log("Input and key are identical to the last processed values. No encryption performed.")
+        resultLabel.Text = "Input and key are the same as last time"
         return
     end
 
     lastInputText = inputText
+    lastKey = key
     local bf = Blowfish.new(key)
     local ciphertext = bf:EncryptString(inputText)
     local hexText = toHex(ciphertext)
