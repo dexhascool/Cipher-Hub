@@ -314,8 +314,8 @@ encodeButton.MouseButton1Click:Connect(function()
     lastInputText = inputText
     local bf = Blowfish.new(key)
     local ciphertext = bf:EncryptString(inputText)
-    local hexText = "<b>Encoded:</b> " .. toHex(ciphertext)
-    resultLabel.Text = hexText
+    local hexText = toHex(ciphertext)
+    resultLabel.Text = "<b>Encoded:</b> " .. hexText
     log("Encoded: " .. hexText)
     chatMessage(hexText)
 end)
