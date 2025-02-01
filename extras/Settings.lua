@@ -99,8 +99,9 @@ function Settings:CreateSettingsUI()
     toggleYOffset = 60
 
     self:AddToggle("ShowChangelog", "Show Changelog:", true, "ShowChangelog.txt")
-    self:AddToggle("ExampleToggle", "Example Toggle:", false, "ExampleToggle.txt")
+    self:AddToggle("ChatEncoded", "Chat Encoded Message:", true, "ChatEncoded.txt")
 
     return self.UIFrame
 end
+
 return Settings
