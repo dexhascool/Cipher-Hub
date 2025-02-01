@@ -19,7 +19,6 @@ local MAGMA_SBOX = {
 }
 
 local function rotateLeft(x, n)
-    -- Use bit32.lrotate if available; otherwise, simulate it.
     return bit32.lrotate(x, n)
 end
 
