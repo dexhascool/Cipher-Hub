@@ -46,6 +46,18 @@ end
 
 function _G.CipherUtils.chatMessage(str)
     str = tostring(str)
+    
+    local settingsPath = "ciphub/settings/ChatEncoded.txt"
+    local shouldChat = true
+    if isfile(settingsPath) then
+        local state = readfile(settingsPath)
+        shouldChat = (state == "true")
+    end
+
+    if not shouldChat then
+        return
+    end
+
     local TextChatService = game:GetService("TextChatService")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local isLegacyChat = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") ~= nil
