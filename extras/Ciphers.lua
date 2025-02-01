@@ -31,10 +31,6 @@ return {
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Autokey.lua", 
         description = "Extends the key with the plaintext" 
     },
-    Trithemius = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Trithemius.lua", 
-        description = "Shifts each letter by a progressively increasing amount" 
-    },
     Base32 = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Base32.lua", 
         description = "Encodes text into Base32 format" 
@@ -58,25 +54,5 @@ return {
     Playfair = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Playfair.lua", 
         description = "Encrypts text using letter pairs" 
-    },
-    ADFGVX = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/ADFGVX.lua", 
-        description = "Encodes text using a 6x6 square and the letters ADFGVX" 
-    },
-    Bacons = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Bacon's.lua", 
-        description = "Encodes text using Bacon's Cipher" 
-    },
-    Gronsfeld = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Gronsfeld.lua", 
-        description = "Encrypts text using a numeric key for substitution" 
-    },
-    Null = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Null.lua", 
-        description = "Extracts every Nth character from the text" 
-    },
-    Chaocipher = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Chaocipher.lua", 
-        description = "Uses shifting rotors for encryption" 
     }
 }
