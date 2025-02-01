@@ -183,11 +183,13 @@ local function showVersionInfo()
 
         local newChangelog = processChangelog(versionData.changelog)
 
-        versionFrame = _G.CipherUtils.createInstance("Frame", {
+        versionFrame = _G.CipherUtils.createInstance("ScrollingFrame", {
             Size = UDim2.new(0, 300, 0, 200),
             Position = UDim2.new(0.5, 0, 0.5, 0),
             BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
             AnchorPoint = Vector2.new(0.5, 0.5),
+            CanvasSize = UDim2.new(0, 0, 0, 250),  -- Increase if needed
+            ScrollBarThickness = 8,
         }, screenGui)
 
         _G.CipherUtils.createInstance("TextLabel", {
