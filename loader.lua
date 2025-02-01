@@ -170,7 +170,7 @@ local function showVersionInfo()
         local function processChangelog(changelog)
             local processed = {}
             for _, line in ipairs(changelog) do
-                if string.find(line, "Added") or string.find(line, "Implemented") then
+                if string.find(line, "Added") or string.find(line, "Implemented") or string.find(line, "Improved") then
                     table.insert(processed, '<font color="#00FF00">[+]</font> ' .. line)
                 elseif string.find(line, "Removed") then
                     table.insert(processed, '<font color="#FF0000">[-]</font> ' .. line)
