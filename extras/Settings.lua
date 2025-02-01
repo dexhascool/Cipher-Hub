@@ -1,5 +1,74 @@
 local Settings = {}
 
+local toggleYOffset = 60
+function Settings:AddToggle(settingKey, displayName, defaultState, fileName)
+    if not _G.CipherUtils then
+        warn("CipherUtils not found! Load the loader script first.")
+        return
+    end
+
+    local settingsPath = "ciphub/settings/" .. fileName
+    local toggleState = defaultState
+    if isfile(settingsPath) then
+        local savedState = readfile(settingsPath)
+        toggleState = (savedState == "true")
+    else
+        writefile(settingsPath, tostring(toggleState))
+    end
+
+    local label = _G.CipherUtils.createInstance("TextLabel", {
+        Name = settingKey .. "Label",
+        Text = displayName,
+        Size = UDim2.new(0, 140, 0, 30),
+        Position = UDim2.new(0, 10, 0, toggleYOffset),
+        BackgroundTransparency = 1,
+        TextColor3 = Color3.new(1, 1, 1),
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 18,
+        TextXAlignment = Enum.TextXAlignment.Left,
+    }, self.UIFrame)
+
+    local toggleContainer = _G.CipherUtils.createInstance("Frame", {
+        Name = settingKey .. "ToggleContainer",
+        Size = UDim2.new(0, 60, 0, 30),
+        Position = UDim2.new(0, 160, 0, toggleYOffset),
+        BackgroundColor3 = (toggleState and Color3.fromRGB(0, 150, 0)) or Color3.fromRGB(180, 180, 180),
+    }, self.UIFrame)
+
+    local knobPosition = toggleState and UDim2.new(1, -28, 0, 2) or UDim2.new(0, 2, 0, 2)
+    local knob = _G.CipherUtils.createInstance("Frame", {
+        Name = settingKey .. "ToggleKnob",
+        Size = UDim2.new(0, 26, 0, 26),
+        Position = knobPosition,
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+    }, toggleContainer)
+
+    local toggleButton = _G.CipherUtils.createInstance("TextButton", {
+        Name = settingKey .. "ToggleButton",
+        Size = UDim2.new(1, 0, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundTransparency = 1,
+        Text = "",
+    }, toggleContainer)
+
+    toggleButton.MouseButton1Click:Connect(function()
+        toggleState = not toggleState
+        if toggleState then
+            knob.Position = UDim2.new(1, -28, 0, 2)
+            toggleContainer.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
+        else
+            knob.Position = UDim2.new(0, 2, 0, 2)
+            toggleContainer.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+        end
+        writefile(settingsPath, tostring(toggleState))
+        if Settings.OnToggle then
+            Settings.OnToggle(settingKey, toggleState)
+        end
+    end)
+
+    toggleYOffset = toggleYOffset + 40
+end
+
 function Settings:CreateSettingsUI()
     if not _G.CipherUtils then
         warn("CipherUtils not found! Load the loader script first.")
@@ -7,7 +76,7 @@ function Settings:CreateSettingsUI()
     end
 
     local screenGui = game:GetService("CoreGui"):FindFirstChild("CipherHubGui") or game:GetService("CoreGui")
-    settingsFrame = _G.CipherUtils.createInstance("Frame", {
+    self.UIFrame = _G.CipherUtils.createInstance("Frame", {
         Name = "SettingsFrame",
         Size = UDim2.new(0, 300, 0, 200),
         Position = UDim2.new(0.5, 0, 0.5, 0),
@@ -25,96 +94,13 @@ function Settings:CreateSettingsUI()
         BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
         TextColor3 = Color3.new(1, 1, 1),
         TextXAlignment = Enum.TextXAlignment.Center,
-    }, settingsFrame)
+    }, self.UIFrame)
 
-    _G.CipherUtils.createInstance("TextLabel", {
-        Name = "ToggleLabel",
-        Text = "Example Toggle:",
-        Size = UDim2.new(0, 120, 0, 30),
-        Position = UDim2.new(0, 10, 0, 60),
-        BackgroundTransparency = 1,
-        TextColor3 = Color3.new(1, 1, 1),
-        Font = Enum.Font.SourceSans,
-        TextSize = 16,
-        TextXAlignment = Enum.TextXAlignment.Left,
-    }, settingsFrame)
+    toggleYOffset = 60
 
-    local toggleContainer = _G.CipherUtils.createInstance("Frame", {
-        Name = "ToggleContainer",
-        Size = UDim2.new(0, 60, 0, 30),
-        Position = UDim2.new(0, 140, 0, 60),
-        BackgroundColor3 = Color3.fromRGB(180, 180, 180),
-    }, settingsFrame)
-    local containerCorner = Instance.new("UICorner")
-    containerCorner.CornerRadius = UDim.new(0, 15)
-    containerCorner.Parent = toggleContainer
+    self:AddToggle("ShowChangelog", "Show Changelog:", true, "ShowChangelog.txt")
+    self:AddToggle("ExampleToggle", "Example Toggle:", false, "ExampleToggle.txt")
 
-    local knob = _G.CipherUtils.createInstance("Frame", {
-        Name = "ToggleKnob",
-        Size = UDim2.new(0, 26, 0, 26),
-        Position = UDim2.new(0, 2, 0, 2),
-        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-    }, toggleContainer)
-    local knobCorner = Instance.new("UICorner")
-    knobCorner.CornerRadius = UDim.new(0, 13)
-    knobCorner.Parent = knob
-
-    local toggleStateLabel = _G.CipherUtils.createInstance("TextLabel", {
-        Name = "ToggleStateLabel",
-        Size = UDim2.new(0, 50, 0, 30),
-        Position = UDim2.new(0, 210, 0, 60),
-        Text = "OFF",
-        Font = Enum.Font.SourceSansBold,
-        TextSize = 18,
-        BackgroundTransparency = 1,
-        TextColor3 = Color3.new(1, 1, 1),
-        TextXAlignment = Enum.TextXAlignment.Center,
-    }, settingsFrame)
-
-    local toggleButton = _G.CipherUtils.createInstance("TextButton", {
-        Name = "ToggleButton",
-        Size = UDim2.new(1, 0, 1, 0),
-        Position = UDim2.new(0, 0, 0, 0),
-        BackgroundTransparency = 1,
-        Text = "",
-    }, toggleContainer)
-
-    local toggleState = false
-    toggleButton.MouseButton1Click:Connect(function()
-        toggleState = not toggleState
-        if toggleState then
-            knob.Position = UDim2.new(1, -28, 0, 2)
-            toggleContainer.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
-            toggleStateLabel.Text = "ON"
-        else
-            knob.Position = UDim2.new(0, 2, 0, 2)
-            toggleContainer.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
-            toggleStateLabel.Text = "OFF"
-        end
-
-        local settingsPath = "ciphub/settings/ExampleToggle.txt"
-        writefile(settingsPath, tostring(toggleState))
-
-        if Settings.OnToggle then
-            Settings.OnToggle("ExampleToggle", toggleState)
-        end
-    end)
-
-    local settingsPath = "ciphub/settings/ExampleToggle.txt"
-    if isfile(settingsPath) then
-        local savedState = readfile(settingsPath)
-        toggleState = savedState == "true"
-        if toggleState then
-            knob.Position = UDim2.new(1, -28, 0, 2)
-            toggleContainer.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
-            toggleStateLabel.Text = "ON"
-        else
-            knob.Position = UDim2.new(0, 2, 0, 2)
-            toggleContainer.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
-            toggleStateLabel.Text = "OFF"
-        end
-    end
-
-    return settingsFrame
+    return self.UIFrame
 end
 return Settings
