@@ -54,7 +54,7 @@ return {
     Playfair = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Playfair.lua", 
         description = "Encrypts text using letter pairs" 
-    }
+    },
     Blowfish = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Blowfish.lua", 
         description = "Blah Blah Blah" 
