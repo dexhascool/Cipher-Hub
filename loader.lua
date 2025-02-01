@@ -188,7 +188,8 @@ local function showVersionInfo()
         _G.CipherUtils.createInstance("TextLabel", {
             Size = UDim2.new(1, -20, 0, 50),
             Position = UDim2.new(0, 10, 0, 50),
-            Text = "Description: " .. versionData.description,
+            Text = "<b>Description:</b> " .. versionData.description,
+            RichText = true,
             Font = Enum.Font.SourceSans,
             TextSize = 16,
             BackgroundTransparency = 1,
@@ -200,7 +201,8 @@ local function showVersionInfo()
         _G.CipherUtils.createInstance("TextLabel", {
             Size = UDim2.new(1, -20, 0, 80),
             Position = UDim2.new(0, 10, 0, 110),
-            Text = "Changelog:\n" .. table.concat(versionData.changelog, "\n"),
+            Text = "<b>Changelog:</b>\n" .. table.concat(versionData.changelog, "\n"),
+            RichText = true,
             Font = Enum.Font.SourceSans,
             TextSize = 16,
             BackgroundTransparency = 1,
