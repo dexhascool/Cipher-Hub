@@ -57,6 +57,10 @@ return {
     },
     Blowfish = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Blowfish.lua", 
-        description = "Blah Blah Blah" 
+        description = "16-round block cipher with variable key" 
+    },
+    Magma = { 
+        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Magma.lua", 
+        description = "GOST cipher: 32 rounds, 256-bit key" 
     }
 }
