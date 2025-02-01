@@ -241,12 +241,30 @@ if isfile(versionFilePath) then
     else
         _G.CipherUtils.log("Version mismatch! Updating version file and showing changelog.")
         writefile(versionFilePath, githubVersion)
-        showVersionInfo()
+        
+        local showChangelogPath = "ciphub/settings/ShowChangelog.txt"
+        if isfile(showChangelogPath) then
+            local showChangelogState = readfile(showChangelogPath)
+            if showChangelogState == "true" then
+                showVersionInfo()
+            end
+        else
+            showVersionInfo()
+        end
     end
 else
     _G.CipherUtils.log("Version file not found. Creating a new one and showing changelog.")
     writefile(versionFilePath, githubVersion)
-    showVersionInfo()
+    
+    local showChangelogPath = "ciphub/settings/ShowChangelog.txt"
+    if isfile(showChangelogPath) then
+        local showChangelogState = readfile(showChangelogPath)
+        if showChangelogState == "true" then
+            showVersionInfo()
+        end
+    else
+        showVersionInfo()
+    end
 end
 
 _G.CipherUtils.createInstance("TextButton", {
