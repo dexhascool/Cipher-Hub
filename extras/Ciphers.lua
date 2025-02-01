@@ -67,14 +67,6 @@ return {
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Bacon's.lua", 
         description = "Encodes text using Bacon's Cipher" 
     },
-    Dionysian = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Dionysian.lua", 
-        description = "Randomized letter substitution cipher" 
-    },
-    Gilbert = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Gilbert.lua", 
-        description = "Uses a key to shift letters in the plaintext" 
-    },
     Gronsfeld = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Gronsfeld.lua", 
         description = "Encrypts text using a numeric key for substitution" 
@@ -82,10 +74,6 @@ return {
     Null = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Null.lua", 
         description = "Extracts every Nth character from the text" 
-    },
-    Schlusselwort = { 
-        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Schl%C3%BCsselwort.lua", 
-        description = "Uses a keyword to substitute letters" 
     },
     Chaocipher = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/ciphers/Chaocipher.lua", 
