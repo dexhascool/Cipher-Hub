@@ -31,7 +31,7 @@ function Settings:AddToggle(settingKey, displayName, defaultState, fileName)
     local toggleContainer = _G.CipherUtils.createInstance("Frame", {
         Name = settingKey .. "ToggleContainer",
         Size = UDim2.new(0, 60, 0, 30),
-        Position = UDim2.new(0, 160, 0, toggleYOffset),
+        Position = UDim2.new(0, 200, 0, toggleYOffset),
         BackgroundColor3 = (toggleState and Color3.fromRGB(0, 150, 0)) or Color3.fromRGB(180, 180, 180),
     }, self.UIFrame)
 
