@@ -181,11 +181,6 @@ local function pad(plaintext)
     return plaintext .. string.rep(string.char(padLen), padLen)
 end
 
-local function unpad(plaintext)
-    local padLen = string.byte(plaintext, #plaintext)
-    return string.sub(plaintext, 1, #plaintext - padLen)
-end
-
 local function toHex(str)
     return (str:gsub('.', function(c)
         return string.format('%02x', string.byte(c))
