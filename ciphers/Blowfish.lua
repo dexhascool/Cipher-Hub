@@ -230,17 +230,6 @@ function Blowfish.new(key)
     return self
 end
 
-function Blowfish:F(x)
-    local a = bit32.rshift(x, 24) + 1
-    local b = bit32.band(bit32.rshift(x, 16), 0xFF) + 1
-    local c = bit32.band(bit32.rshift(x, 8), 0xFF) + 1
-    local d = bit32.band(x, 0xFF) + 1
-    local f = self.S[1][a] + self.S[2][b]
-    f = bit32.bxor(f, self.S[3][c])
-    f = f + self.S[4][d]
-    return f
-end
-
 function Blowfish:EncryptBlock(L, R)
     for i = 1, 16 do
         L = bit32.bxor(L, self.P[i])
