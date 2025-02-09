@@ -7,11 +7,20 @@ local CipherUtils = _G.CipherUtils
 local log = CipherUtils.log
 local chatMessage = CipherUtils.chatMessage
 
+local function byteToBinary(byte)
+    local bits = {}
+    for i = 7, 0, -1 do
+        local bit = math.floor(byte / 2^i) % 2
+        table.insert(bits, tostring(bit))
+    end
+    return table.concat(bits)
+end
+
 local function textToBinary(text)
     local binary = {}
     for i = 1, #text do
         local byte = string.byte(text, i)
-        table.insert(binary, string.format("%08b", byte))
+        table.insert(binary, byteToBinary(byte))
     end
     return table.concat(binary, " ")
 end
