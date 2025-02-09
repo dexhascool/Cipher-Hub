@@ -28,7 +28,7 @@ end
 local baseUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/refs/heads/main/extras/UILib.lua"))()
 
 local uiElements = 3
-local frame = baseUi.createUi("Dynamic Binary Encoder", uiElements)
+local frame = baseUi.createUi("Binary Encoder", uiElements)
 
 local inputBox = baseUi.addInputBox(frame, "Enter text", UDim2.new(0, 10, 0, 50))
 local encodeButton = baseUi.addEncodeButton(frame, UDim2.new(0, 20, 0, 100))
@@ -53,7 +53,7 @@ encodeButton.MouseButton1Click:Connect(function()
 
     lastInputText = inputText
     local binaryText = textToBinary(inputText)
-    resultLabel.Text = "<b>Binary:</b> " .. binaryText
+    resultLabel.Text = "<b>Encoded:</b> " .. binaryText
     log("Encoded: " .. binaryText)
     chatMessage(binaryText)
 end)
