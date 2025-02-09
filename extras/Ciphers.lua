@@ -62,5 +62,9 @@ return {
     Magma = { 
         url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Magma.lua", 
         description = "GOST cipher: 32 rounds, 256-bit key" 
+    },
+    Binary = {
+        url = "https://raw.githubusercontent.com/thelonious-jaha/Cipher-Hub/main/ciphers/Binary.lua",
+        description = "Converts text to binary"
     }
 }
